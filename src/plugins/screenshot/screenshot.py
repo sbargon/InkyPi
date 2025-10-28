@@ -12,7 +12,10 @@ class Screenshot(BasePlugin):
         if not url:
             raise RuntimeError("URL is required.")
 
-        dimensions = device_config.get_resolution()
+        if not settings.get('fullScreen') or settings.get('fullScreen') == "false":
+            dimensions = device_config.get_resolution()
+        else:
+            dimensions = [-1,-1]
         if device_config.get_config("orientation") == "vertical":
             dimensions = dimensions[::-1]
 
