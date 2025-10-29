@@ -15,7 +15,7 @@ class Screenshot(BasePlugin):
         if not settings.get('fullScreen') or settings.get('fullScreen') == "false":
             dimensions = device_config.get_resolution()
         else:
-            dimensions = [-1,-1]
+            dimensions = []
         if device_config.get_config("orientation") == "vertical":
             dimensions = dimensions[::-1]
 
