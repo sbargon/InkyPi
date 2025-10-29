@@ -107,25 +107,46 @@ def take_screenshot(target, dimensions, timeout_ms=None):
         with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as img_file:
             img_file_path = img_file.name
 
-        command = [
-            "chromium-headless-shell",
-            target,
-            "--headless",
-            f"--screenshot={img_file_path}",
-            f"--window-size={dimensions[0]},{dimensions[1]}",
-            "--disable-dev-shm-usage",
-            "--disable-gpu",
-            "--use-gl=swiftshader",
-            "--hide-scrollbars",
-            "--in-process-gpu",
-            "--js-flags=--jitless",
-            "--disable-zero-copy",
-            "--disable-gpu-memory-buffer-compositor-resources",
-            "--disable-extensions",
-            "--disable-plugins",
-            "--mute-audio",
-            "--no-sandbox"
-        ]
+        if dimensions:
+            command = [
+                "chromium-headless-shell",
+                target,
+                "--headless",
+                f"--screenshot={img_file_path}",
+                f"--window-size={dimensions[0]},{dimensions[1]}",
+                "--disable-dev-shm-usage",
+                "--disable-gpu",
+                "--use-gl=swiftshader",
+                "--hide-scrollbars",
+                "--in-process-gpu",
+                "--js-flags=--jitless",
+                "--disable-zero-copy",
+                "--disable-gpu-memory-buffer-compositor-resources",
+                "--disable-extensions",
+                "--disable-plugins",
+                "--mute-audio",
+                "--no-sandbox"
+            ]
+        else:
+            command = [
+                "chromium-headless-shell",
+                target,
+                "--headless",
+                f"--screenshot={img_file_path}",
+                "--disable-dev-shm-usage",
+                "--disable-gpu",
+                "--use-gl=swiftshader",
+                "--hide-scrollbars",
+                "--in-process-gpu",
+                "--js-flags=--jitless",
+                "--disable-zero-copy",
+                "--disable-gpu-memory-buffer-compositor-resources",
+                "--disable-extensions",
+                "--disable-plugins",
+                "--mute-audio",
+                "--no-sandbox"
+            ]
+            
         if timeout_ms:
             command.append(f"--timeout={timeout_ms}")
         result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
